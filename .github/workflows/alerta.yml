@@ -1,0 +1,29 @@
+name: Notificacion DevOps ITLA
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Ejecutar Hola Mundo
+        run: node hola.js
+
+      - name: Enviar notificacion
+        run: |
+          curl --fail-with-body -X POST \
+            -H "Title: Notificacion DevOps ITLA" \
+            -d "Nuevo push a main. Hola Mundo ejecutado correctamente." \
+            https://ntfy.sh/devops-itla
